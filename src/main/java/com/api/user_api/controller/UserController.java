@@ -1,9 +1,14 @@
 package com.api.user_api.controller;
 
+import com.api.user_api.dto.UserRequest;
 import com.api.user_api.model.User;
 import com.api.user_api.repository.UserRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +27,10 @@ public class UserController {
     }*/
 
     @PostMapping
-    public User createUser(@RequestBody User user){
-        return userRepository.save(user);
+    public ResponseEntity<User> createUser(@Valid @RequestBody UserRequest request){
+        User user = new User();
+        BeanUtils.copyProperties(request, user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(user));
     }
 
     @GetMapping
