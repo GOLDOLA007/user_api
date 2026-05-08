@@ -24,7 +24,8 @@ public class UserController {
     @GetMapping
     public String status(){
         return "The API is online!";
-    }*/
+    }
+    */
 
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody UserRequest request){
@@ -37,4 +38,11 @@ public class UserController {
     public List<User> listAll(){
         return userRepository.findAll();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getById(@PathVariable Long id){
+        return userRepository.findById(id)
+                .map(ResponseEntity:: ok)
+                .orElse(ResponseEntity.notFound().build());
+    }*/
 }
