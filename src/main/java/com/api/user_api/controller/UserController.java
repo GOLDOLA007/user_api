@@ -28,7 +28,12 @@ public class UserController {
     */
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody UserRequest request){
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserRequest request){
+        if(userRepository.existsByEmail(request.email())){
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Email already exists");
+        }
+
         User user = new User();
         BeanUtils.copyProperties(request, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(user));
@@ -44,5 +49,5 @@ public class UserController {
         return userRepository.findById(id)
                 .map(ResponseEntity:: ok)
                 .orElse(ResponseEntity.notFound().build());
-    }*/
+    }
 }
