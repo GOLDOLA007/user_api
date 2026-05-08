@@ -39,6 +39,26 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(user));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable Long id,
+                                        @Valid @RequestBody UserRequest request){
+        return userRepository.findById(id)
+                .map(user -> {
+                    if(!user.getEmail().equals(request.email()) && userRepository.existsByEmail(request.email())){
+                        return ResponseEntity.status(HttpStatus.CONFLICT)
+                                .body("Email already exists in another account");
+                    }
+
+                    BeanUtils.copyProperties(request, user);
+
+                    user.setId(id);
+
+                    User updatedUser = userRepository.save(user);
+                    return ResponseEntity.ok(updatedUser);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping
     public List<User> listAll(){
         return userRepository.findAll();
