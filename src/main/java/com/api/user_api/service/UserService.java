@@ -6,7 +6,7 @@ import com.api.user_api.model.User;
 import com.api.user_api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +17,7 @@ import java.util.Optional;
 public class UserService{
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public List<UserResponse> findAll(){
         return userRepository.findAll().stream()
@@ -34,6 +35,10 @@ public class UserService{
         }
         User user = new User();
         BeanUtils.copyProperties(request, user);
+
+        String passwordEncoded = passwordEncoder.encode(request.password());
+        user.setPassword(passwordEncoded);
+
         User savedUser = userRepository.save(user);
         return new UserResponse(savedUser);
     }
