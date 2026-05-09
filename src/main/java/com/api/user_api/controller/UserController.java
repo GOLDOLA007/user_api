@@ -3,6 +3,7 @@ package com.api.user_api.controller;
 import com.api.user_api.dto.UserRequest;
 import com.api.user_api.model.User;
 import com.api.user_api.repository.UserRepository;
+import com.api.user_api.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -19,6 +20,7 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final UserService userService;
 
     /*
     @GetMapping
@@ -26,6 +28,18 @@ public class UserController {
         return "The API is online!";
     }
     */
+
+    @GetMapping
+    public List<User> listAll(){
+        return userRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getById(@PathVariable Long id){
+        return userRepository.findById(id)
+                .map(ResponseEntity:: ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody UserRequest request){
@@ -68,15 +82,5 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
-    public List<User> listAll(){
-        return userRepository.findAll();
-    }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getById(@PathVariable Long id){
-        return userRepository.findById(id)
-                .map(ResponseEntity:: ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
 }
