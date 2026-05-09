@@ -47,24 +47,14 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id,
                                         @Valid @RequestBody UserRequest request){
-        try{
-            return ResponseEntity.ok().body(userService.update(id, request));
-        }
-        catch (Exception e){
-            HttpStatus status = e.getMessage().contains("not found") ? HttpStatus.NOT_FOUND : HttpStatus.CONFLICT;
-            return ResponseEntity.status(status).body(e.getMessage());
-        }
+        User updatedUser = userService.update(id, request);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id){
-        try{
-            userService.delete(id);
-            return ResponseEntity.noContent().build();
-        }
-        catch (Exception e){
-            return ResponseEntity.notFound().build();
-        }
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 
