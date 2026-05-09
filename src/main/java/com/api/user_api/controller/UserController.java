@@ -1,6 +1,7 @@
 package com.api.user_api.controller;
 
 import com.api.user_api.dto.UserRequest;
+import com.api.user_api.dto.UserResponse;
 import com.api.user_api.model.User;
 import com.api.user_api.repository.UserRepository;
 import com.api.user_api.service.UserService;
@@ -28,12 +29,12 @@ public class UserController {
     */
 
     @GetMapping
-    public List<User> listAll(){
+    public List<UserResponse> listAll(){
         return userService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getById(@PathVariable Long id){
+    public ResponseEntity<UserResponse> getById(@PathVariable Long id){
         return userService.findById(id)
                 .map(ResponseEntity:: ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -47,7 +48,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id,
                                         @Valid @RequestBody UserRequest request){
-        User updatedUser = userService.update(id, request);
+        UserResponse updatedUser = userService.update(id, request);
         return ResponseEntity.ok(updatedUser);
     }
 
