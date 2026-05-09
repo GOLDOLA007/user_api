@@ -59,6 +59,15 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id){
+        if(!userRepository.existsById(id)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        userRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping
     public List<User> listAll(){
         return userRepository.findAll();
