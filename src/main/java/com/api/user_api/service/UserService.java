@@ -53,6 +53,10 @@ public class UserService{
 
         BeanUtils.copyProperties(request, user);
         user.setId(id);
+
+        String passwordEncoded = passwordEncoder.encode(request.password());
+        user.setPassword(passwordEncoded);
+
         User newUser = userRepository.save(user);
         return new UserResponse(newUser);
     }
