@@ -41,7 +41,7 @@ if(!user.getEmail().equals(request.email()) && userRepository.existsByEmail(requ
 ```
 
 # 09-05-2026 - Evolução da API de Usuários
-## 🏗️ Evolução Arquitetural: Camada de Serviço e Tratamento Global
+## 🏗️ Evolução Arquitetural: Camada de Serviço, Tratamento Global e DTOs
 
 Nesta etapa, o projeto deixou de ser um "Script CRUD" e passou a seguir padrões de mercado (Enterprise Patterns).
 
@@ -62,3 +62,13 @@ Refinamos a validação de e-mail no método PUT:
 if (!user.getEmail().equals(request.email()) && userRepository.existsByEmail(request.email())) {
     throw new RuntimeException("Email already exists");
 }
+```
+### 4. DTOs de Saída (Data Transfer Objects)
+Introduzimos o `UserResponse` (Record) para customizar o que a API envia para o cliente.
+- **Segurança:** O campo `password` foi removido da resposta. Mesmo que a senha esteja no banco, ela nunca "viaja" pela rede nas consultas GET ou POST.
+- **Contrato de API:** O DTO garante que o Front-end receba sempre o mesmo formato, mesmo que a estrutura da tabela no banco de dados mude.
+
+### 🚀 Lições Aprendidas (Git & Workflow)
+- **Soft Reset:** Uso de `git reset --soft HEAD~1` para desfazer commits e reorganizar arquivos sem perder o código.
+- **Git Add Específico:** Aprendi a evitar o `git add .` quando quero separar alterações em diferentes commits.
+- **Force Push:** Como sincronizar o GitHub após reescrever o histórico local (usar apenas em projetos individuais ou com cautela).
