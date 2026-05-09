@@ -41,7 +41,7 @@ if(!user.getEmail().equals(request.email()) && userRepository.existsByEmail(requ
 ```
 
 # 09-05-2026 - Evolução da API de Usuários
-## 🏗️ Evolução Arquitetural: Camada de Serviço, Tratamento Global e DTOs
+## 🏗️ Evolução Arquitetural: Camada de Serviço, Tratamento Global, DTOs, Swagger e GIT/Workflow
 
 Nesta etapa, o projeto deixou de ser um "Script CRUD" e passou a seguir padrões de mercado (Enterprise Patterns).
 
@@ -73,6 +73,11 @@ Adicionamos o Spring Security para garantir a privacidade dos dados sensíveis.
 - **Hash Unidirecional:** As senhas são transformadas em um "hash" antes de serem salvas. Esse processo é irreversível (não existe "descriptografia").
 - **BCryptPasswordEncoder:** Usamos esse componente para gerar e validar as senhas.
 - **Segurança no Login:** Para validar um acesso futuro, o sistema não lê a senha, mas sim compara se o hash gerado na hora bate com o hash salvo no banco.
+
+### 6. Solução de Conflitos de Versão (Swagger vs RestControllerAdvice)
+- **Problema:** Erro `NoSuchMethodError` ao tentar ler classes de exceção com versões novas do Spring Boot.
+- **Solução:** Uso da anotação `@Hidden` no `RestExceptionHandler`.
+- **Resultado:** A documentação OpenAPI ignora componentes de tratamento de erro que causariam instabilidade, mantendo a interface visual (Swagger UI) funcional e estável.
 
 ### 🚀 Lições Aprendidas (Git & Workflow)
 - **Soft Reset:** Uso de `git reset --soft HEAD~1` para desfazer commits e reorganizar arquivos sem perder o código.
