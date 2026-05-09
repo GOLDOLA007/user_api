@@ -1,6 +1,7 @@
 package com.api.user_api.service;
 
 import com.api.user_api.dto.UserRequest;
+import com.api.user_api.dto.UserResponse;
 import com.api.user_api.model.User;
 import com.api.user_api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,23 +18,27 @@ public class UserService{
 
     private final UserRepository userRepository;
 
-    public List<User> findAll(){
-        return userRepository.findAll();
+    public List<UserResponse> findAll(){
+        return userRepository.findAll().stream()
+                .map(UserResponse::new)
+                .toList();
     }
-    public Optional<User> findById(long id){
-        return userRepository.findById(id);
+    public Optional<UserResponse> findById(long id){
+        return userRepository.findById(id)
+                .map(UserResponse::new);
     }
 
-    public User save(UserRequest request){
+    public UserResponse save(UserRequest request){
         if(userRepository.existsByEmail(request.email())){
             throw new RuntimeException("Email already exists");
         }
         User user = new User();
         BeanUtils.copyProperties(request, user);
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        return new UserResponse(savedUser);
     }
 
-    public User update(long id, UserRequest request){
+    public UserResponse update(long id, UserRequest request){
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -43,7 +48,8 @@ public class UserService{
 
         BeanUtils.copyProperties(request, user);
         user.setId(id);
-        return userRepository.save(user);
+        User newUser = userRepository.save(user);
+        return new UserResponse(newUser);
     }
 
     public void delete(long id){
