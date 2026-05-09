@@ -68,6 +68,12 @@ Introduzimos o `UserResponse` (Record) para customizar o que a API envia para o 
 - **Segurança:** O campo `password` foi removido da resposta. Mesmo que a senha esteja no banco, ela nunca "viaja" pela rede nas consultas GET ou POST.
 - **Contrato de API:** O DTO garante que o Front-end receba sempre o mesmo formato, mesmo que a estrutura da tabela no banco de dados mude.
 
+### 5. Criptografia de Senhas com BCrypt
+Adicionamos o Spring Security para garantir a privacidade dos dados sensíveis.
+- **Hash Unidirecional:** As senhas são transformadas em um "hash" antes de serem salvas. Esse processo é irreversível (não existe "descriptografia").
+- **BCryptPasswordEncoder:** Usamos esse componente para gerar e validar as senhas.
+- **Segurança no Login:** Para validar um acesso futuro, o sistema não lê a senha, mas sim compara se o hash gerado na hora bate com o hash salvo no banco.
+
 ### 🚀 Lições Aprendidas (Git & Workflow)
 - **Soft Reset:** Uso de `git reset --soft HEAD~1` para desfazer commits e reorganizar arquivos sem perder o código.
 - **Git Add Específico:** Aprendi a evitar o `git add .` quando quero separar alterações em diferentes commits.
