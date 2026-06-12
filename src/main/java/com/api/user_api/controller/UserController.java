@@ -40,11 +40,6 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<?> createUser(@Valid @RequestBody UserRequest request){
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(request));
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id,
                                         @Valid @RequestBody UserRequest request){
