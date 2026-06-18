@@ -29,7 +29,6 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if(token == null) {
             filterChain.doFilter(request, response);
-            return;
         }
         else{
             String email = tokenService.validateToken(token);
