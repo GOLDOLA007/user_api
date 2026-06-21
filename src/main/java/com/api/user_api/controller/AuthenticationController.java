@@ -25,7 +25,7 @@ public class AuthenticationController {
     private final UserService userService;
     private final CustomHealthCheck customHealthCheck;
 
-    @GetMapping("/status-javaconfig")
+    @GetMapping("/status")
     public Health status(){
         return customHealthCheck.health();
     }
