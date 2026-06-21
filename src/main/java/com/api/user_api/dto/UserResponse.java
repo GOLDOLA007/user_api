@@ -5,8 +5,8 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
-public record UserResponse(Long id, String name, String email, Collection<? extends GrantedAuthority> auth, String password) {
+public record UserResponse(Long id, String name, String email) {
     public UserResponse(User user) {
-        this(user.getId(), user.getName(), user.getEmail(), user.getAuthorities(), user.getPassword());
+        this(user.getId(), user.getName(), user.getEmail());
     }
 }
