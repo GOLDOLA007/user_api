@@ -55,7 +55,7 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
-                registry.addMapping("/auth/status-javaconfig")
+                registry.addMapping("/auth/status")
                         .allowedOrigins("http://127.0.0.1:5500/")
                         .allowedMethods("GET");
 
