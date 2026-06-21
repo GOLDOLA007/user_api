@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 public class CustomHealthCheck implements HealthIndicator {
     @Override
     public Health health() {
-        return Health.status("ONLINE").build();
+        return Health.status("200").build();
     }
 }
