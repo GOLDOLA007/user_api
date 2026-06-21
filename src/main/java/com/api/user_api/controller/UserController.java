@@ -16,12 +16,6 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final CustomHealthCheck customHealthCheck;
-
-    @GetMapping("/status-javaconfig")
-    public Health status(){
-        return customHealthCheck.health();
-    }
 
     @GetMapping
     public List<UserResponse> listAll(){
