@@ -63,6 +63,11 @@ public class SecurityConfig {
                         .allowedOrigins("http://127.0.0.1:5500/")
                         .allowedMethods("POST", "OPTIONS")
                         .allowedHeaders("Content-Type", "Authorization");
+
+                registry.addMapping("/auth/login")
+                        .allowedOrigins("http://127.0.0.1:5500/")
+                        .allowedMethods("POST", "OPTIONS")
+                        .allowedHeaders("Content-Type", "Authorization");
             }
         };
     }
