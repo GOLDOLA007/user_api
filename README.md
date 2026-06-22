@@ -17,7 +17,7 @@ A robust **REST API** for user management, built with **Spring Boot 3**. This pr
 ### 🌐 Web Client / Frontend Testing
 To test this API in a real web environment and simulate complete authentication flows, use the client repository:
 
-🔗 **[user-api-frontend](https://github.com/GOLDOLA007/user-api-frontend)**
+🔗 **[user-api-frontend](https://github.com/GOLDOLA007/user_api_frontend)**
 
 The frontend is a static application (Vanilla HTML/JS) that consumes this API, simulating the behavior of an end user when registering, logging in, and navigating access routes protected by cookie/token-based security.
 
