@@ -49,7 +49,7 @@ The frontend is a static application (Vanilla HTML/JS) that consumes this API, s
 
 1️⃣ **Clone the repository**
 ```bash
-git clone [https://github.com/your-username/user-api.git](https://github.com/your-username/user-api.git)
+git clone https://github.com/your-username/user-api.git
 ```
 
 2️⃣ **Configure Database**
